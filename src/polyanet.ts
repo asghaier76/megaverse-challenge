@@ -1,4 +1,5 @@
 import { crossMintApi } from './utils/crossMintApi';
+import { quadrantTransform } from './utils/indexTransformer';
 
 enum Direction {
     'ROW' , 'COL'
@@ -12,23 +13,10 @@ export class Polyanet {
   public async fillPolyanet(row: number, column: number, quadrantId: number = 0): Promise<void> {
     let retries = 5; // Number of retries
     let delay = 2000; // Initial delay in milliseconds
-    switch(quadrantId) {
-        case 1:
-            column = 26 -column;
-            break;
-        case 2:
-            row = 26 -row;
-            column = 26 -column;
-            break;
-        case 3:
-            row = 26 - row;
-            break;
-        default:
-            break;
-    }
+    const transformedIndex = quadrantTransform(quadrantId, {row, column});
     for (let i = 0; i < retries; i++) {
       try {
-        await crossMintApi.post(this.urlSegment, { row, column })
+        await crossMintApi.post(this.urlSegment, { row: transformedIndex.row, column: transformedIndex.column })
         // await axios.post(this.apiUrl, { row, column, candidateId });
         break; // If the request is successful, exit the loop
       } catch (error: any) {
