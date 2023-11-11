@@ -1,0 +1,32 @@
+import { SoloonItem, SoloonColor } from '../models'
+
+export const soloonPositions: SoloonItem[] = [
+    { row: 3, column: 20, color: SoloonColor.WHITE_SOLOON },
+    { row: 4, column: 5, color: SoloonColor.BLUE_SOLOON },
+    { row: 4, column: 8, color: SoloonColor.PURPLE_SOLOON },
+    { row: 5, column: 6, color: SoloonColor.WHITE_SOLOON },
+    { row: 5, column: 19, color: SoloonColor.BLUE_SOLOON },
+    { row: 7, column: 15, color: SoloonColor.RED_SOLOON },
+    { row: 7, column: 23, color: SoloonColor.PURPLE_SOLOON },
+    { row: 8, column: 4, color: SoloonColor.WHITE_SOLOON },
+    { row: 8, column: 10, color: SoloonColor.BLUE_SOLOON },
+    { row: 9, column: 6, color: SoloonColor.PURPLE_SOLOON },
+    { row: 9, column: 12, color: SoloonColor.RED_SOLOON },
+    { row: 10, column: 18, color: SoloonColor.PURPLE_SOLOON },
+    { row: 11, column: 7, color: SoloonColor.BLUE_SOLOON },
+    { row: 14, column: 9, color: SoloonColor.WHITE_SOLOON },
+    { row: 14, column: 17, color: SoloonColor.BLUE_SOLOON },
+    { row: 15, column: 19, color: SoloonColor.WHITE_SOLOON },
+    { row: 16, column: 8, color: SoloonColor.BLUE_SOLOON },
+    { row: 16, column: 21, color: SoloonColor.BLUE_SOLOON },
+    { row: 17, column: 14, color: SoloonColor.PURPLE_SOLOON },
+    { row: 18, column: 6, color: SoloonColor.PURPLE_SOLOON },
+    { row: 18, column: 22, color: SoloonColor.RED_SOLOON },
+    { row: 19, column: 11, color: SoloonColor.WHITE_SOLOON },
+    { row: 21, column: 10, color: SoloonColor.RED_SOLOON },
+    { row: 21, column: 16, color: SoloonColor.WHITE_SOLOON },
+    { row: 21, column: 19, color: SoloonColor.PURPLE_SOLOON },
+    { row: 22, column: 5, color: SoloonColor.RED_SOLOON },
+    { row: 22, column: 8, color: SoloonColor.BLUE_SOLOON },
+    { row: 22, column: 24, color: SoloonColor.RED_SOLOON }
+]

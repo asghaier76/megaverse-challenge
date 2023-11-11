@@ -9,3 +9,13 @@ export const fillWithSpace = async(targetIdx: PolyanetIndex) => {
       throw error;
     }
 }
+
+export const getCurrentMegaverse = async() => {
+  const urlSegment = 'map/5f98d93b-774b-4241-a4e1-d55074235b48';
+  try {
+    const res = await crossMintApi(urlSegment);
+    return res.data;
+  } catch (error: any) {
+    throw error;
+  }
+}

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc",
+    "extract": "ts-node src/scripts/extractIndices.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

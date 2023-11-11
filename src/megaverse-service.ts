@@ -1,33 +1,67 @@
+import { Cometh } from './cometh';
 import { Polyanet } from './polyanet';
-import { fillWithSpace } from './utils/wipe';
+import { Soloon } from './soloon';
+import { fillWithSpace, getCurrentMegaverse } from './utils/crossVerseUtils';
+import { Logger } from './logger';
 
 export class MegaverseService {
   private polyanet: Polyanet;
+  private soloon: Soloon;
+  private cometh: Cometh;
 
-  constructor() {
+  private megaverseMatrix: string[][];
+
+  constructor(matrixSize: number) {
+    this.megaverseMatrix = Array.from({ length: matrixSize }, () =>
+      Array.from({ length: matrixSize }, () => 'SPACE')
+    );
     this.polyanet = new Polyanet();
+    this.soloon = new Soloon();
+    this.cometh = new Cometh();
   }
 
-  public async fillMegaverseShape(matrixSize: number, bufferZone: number) {
-    for(let id = 0; id < 4; id++) { // process the four quadrants to cover the grid
-      try {
-        await this.polyanet.fillQuadrantByPolyanets(id);
-        // matrix[row][col] = 'POLYANET';
-      } catch (error: any) {
-        console.error(`Error filling Megaverse matrix [${matrixSize},${bufferZone}]: ${error.message}`);
-      }
+  public async getCurrentMegaverse() {
+    this.megaverseMatrix = await getCurrentMegaverse();
+    return this.megaverseMatrix;
+  }
+
+  public async sprinkleSloons() {
+    try {
+      await this.soloon.sprinkleUpSoloons();
+    } catch (error: any) {
+      Logger.error(`Sadly we did not finish prettying up the Megaverse with soloons: ${error.message}`);
+    }
+  }
+
+  public async throwComeths() {
+    try {
+      await this.cometh.throwComeths();
+    } catch (error: any) {
+      Logger.error(`Opps a thrown cometh failed, rest assured the Megaverse is not doomed: ${error.message}`);
     }
   }
 
   public async wipeEntireMegaVerse(matrixSize: number) {
     for(let row = 0; row < matrixSize; row++) {
-      for(let col = 0; col < matrixSize; col++) { 
+      for(let column = 0; column < matrixSize; column++) { 
         try {
-          await fillWithSpace(row,col);
-          console.log('wiping index,',row,col)
+          Logger.debug(`wiping index: [${row}, ${column}]`);
+          await fillWithSpace({row,column});
         } catch (error: any) {
-          console.error(`Error in wiping Megaverse happened at [${row},${col}]: ${error.message}`);
+          Logger.error(`Even wiping a Megaverse space is not easy, some wiping didn't happen at,  [${row},${column}]: ${error.message}`);
         }
+      }
+    }
+  }
+
+  public async fillMegaverseShape() {
+    for(let id = 0; id < 4; id++) { // process the four quadrants to cover the grid
+      try {
+        Logger.debug(`Let's get started with building 🪐POLYanets in quadrant with index: [${id}]`);
+        await this.polyanet.fillQuadrantByPolyanets(id);
+        Logger.info(`Successfully got all 🪐POLYanets in quadrant [${id}] built`)
+      } catch (error: any) {
+        Logger.error(`It was not easy to Polyanet the Megaverse matrix, it can be a temporal or spatial glitch: ${error.message}`);
       }
     }
   }
@@ -40,14 +74,14 @@ export class MegaverseService {
 
     // Loop through the matrix and fill the appropriate positions
     for (let row = bufferZone; row <= matrixSize - bufferZone; row++) {
-      for (let col = bufferZone; col < matrixSize - bufferZone; col++) {
-        if (row === col || row === matrixSize - col - 1) {
+      for (let column = bufferZone; column < matrixSize - bufferZone; column++) {
+        if (row === column || row === matrixSize - column - 1) {
           // If the current position is on one of the diagonals, fill it with 🪐POLYanet
           try {
-            await this.polyanet.fillPolyanet(row, col);
-            matrix[row][col] = 'POLYANET';
+            await this.polyanet.fillPolyanet({row, column});
+            matrix[row][column] = 'POLYANET';
           } catch (error: any) {
-            console.error(`Error filling position [${row},${col}]: ${error.message}`);
+            Logger.error(`Error filling position [${row},${column}]: ${error.message}`);
           }
         }
       }

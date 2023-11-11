@@ -1,7 +1,7 @@
 import { crossMintApi } from './utils/crossMintApi';
 import { quadrantTransform } from './utils/indexTransformer';
 import { PolyanetIndex } from './models';
-
+import { Logger } from './logger';
 
 enum Direction {
     'ROW' , 'COL'
@@ -15,7 +15,8 @@ export class Polyanet {
   public async fillPolyanet(polyanetIdx: PolyanetIndex, quadrantId: number = 0): Promise<void> {
     const transformedIndex = quadrantTransform(quadrantId, polyanetIdx);
       try {
-        await crossMintApi.post(this.urlSegment, transformedIndex)
+        await crossMintApi.post(this.urlSegment, transformedIndex);
+        Logger.info(`Building the Megaverse one 🪐POLYanet at an index [${transformedIndex.row}, ${transformedIndex.column}] `);
       } catch (error: any) {
         throw error;
       }
@@ -27,23 +28,21 @@ export class Polyanet {
     const matrix: string[][] = Array.from({ length: quadrantGridSize }, () =>
       Array.from({ length: quadrantGridSize }, () => 'SPACE')
     );
-    let col = bufferZone;
+    let column = bufferZone;
     let directionCounter = 0;
     for (let row = bufferZone; row < quadrantGridSize; row++) {
-            console.log({direction,directionCounter,row,col})
-
             try {
-                await this.fillPolyanet(row, col, quadrantId);   
-                matrix[row][col] = 'POLYANET';
-                console.log({row,col})            
+                Logger.debug(`Sending 🪐POLYanet to index [${row},${column}]`)            
+                await this.fillPolyanet({row, column}, quadrantId);   
+                matrix[row][column] = 'POLYANET';
                 if(direction === Direction.COL) {
-                    col++;
+                    column++;
                 } else {
                     row++;
                 }
-                await this.fillPolyanet(row, col, quadrantId); 
-                matrix[row][col] = 'POLYANET';
-                console.log({row,col})
+                await this.fillPolyanet({row, column}, quadrantId); 
+                matrix[row][column] = 'POLYANET';
+                console.log({row,column})
                 if(directionCounter === 3) {
                     directionCounter = 0;
                     direction = this.flipDirection(direction);
@@ -51,9 +50,9 @@ export class Polyanet {
                     directionCounter++
                 }
             } catch (error: any) {
-                console.error(`Error filling position [${row},${col}]: ${error.message}`);
+                Logger.error(`Error filling a 🪐POLYanet at position [${row},${column}]: ${error.message}`);
             }
-            col++;
+            column++;
 
     }
     return matrix;
@@ -65,16 +64,12 @@ export class Polyanet {
     let matrix: string[][] = Array.from({ length: quadrantGridSize }, () =>
       Array.from({ length: quadrantGridSize }, () => 'SPACE')
     );
-    // for (let row = 0; row <= 1; row++) {
-    //     for(let col = 0; col <= 1; col++) {
-    //         await this.clearItem(row,col)
-    //     }
-    // }
+ 
     matrix = await this.fillRowColSequence(quadrantId, direction);
     direction = Direction.ROW;
     matrix = await this.fillRowColSequence(quadrantId, direction);
-    console.log('Quadrant filled successfully, here is the submitted matrix content.');
-    console.log(JSON.stringify({ goal: matrix }, null, 2));
+    Logger.info('Quadrant filled successfully, here is the submitted matrix content.');
+    Logger.info(JSON.stringify({ goal: matrix }, null, 2));
   }
 
 
