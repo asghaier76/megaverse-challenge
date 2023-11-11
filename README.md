@@ -13,7 +13,7 @@ The goal matrix shows that there is symmetry drawn around row and col 13 so ther
 So, getting the POLYanets 🪐 in place requires running the same code to planet the POLYanets 🪐 in each qudrant 
 but with a twist of the indices based on which quadrant is targeted using the a transformation built for that.
 
-Inside each quadrant, there is alsp a pattern that shows it can be done in steps of filling two in a row then 
+Inside each quadrant, there is also a pattern that shows it can be done in steps of filling two in a row then 
 two in a column, and then repeat in the opposite order.
 
 ### Sprinkling 🌙SOLOONs🌙
@@ -23,8 +23,8 @@ there was no pattern identfied. A check point is to make sure that the sent to i
 
 ### The Guarding ☄COMETHs☄
 
-As guardians of the Megaverse, the same approach of a mapping table is used extracted from the goals matrix to 
-throw the ☄COMETHs across the Megaverse.
+As the guardians of the Megaverse, the same approach of a mapping table is used extracted from the goals matrix to 
+throw the ☄COMETHs and scatter them across the Megaverse.
 
 ### Megaverse temporal and spatial glitches
 As expected, building a Megaverse is full of surprises, physics can't yet explain all about it, so glitches were 
@@ -42,14 +42,13 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
 $ npm run start
 
 # build
 $ npm run build
 ```
 
-To extract the indices for 🌙SOLOONs and ☄COMETHs run this commane
+To extract the indices for 🌙SOLOONs and ☄COMETHs run this command
 ```bash
 $ npm run extract
 ```
