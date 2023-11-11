@@ -4,7 +4,7 @@
 
 Building the Megaverse takes time and brilliance, it can't be done at once. 
 
-The builds the Megaverse in three steps
+Building the Megaverse happened in three steps.
 
 ### Populating 🪐POLYanets🪐
 
@@ -21,14 +21,14 @@ two in a column, and then repeat in the opposite order.
 Here a mapping table is used extracted from the goals matrix to sprinkle the 🌙SOLoons each in its position, 
 there was no pattern identfied. A check point is to make sure that the sent to index is adjacent to a 🪐POLYanet. 
 
-### the Guarding ☄COMETHs☄
+### The Guarding ☄COMETHs☄
 
 As guardians of the Megaverse, the same approach of a mapping table is used extracted from the goals matrix to 
 throw the ☄COMETHs across the Megaverse.
 
-### Megaverse temportal and spatial glitches
+### Megaverse temporal and spatial glitches
 As expected, building a Megaverse is full of surprises, physics can't yet explain all about it, so glitches were 
-handled by adding a timing and retry machine to resend objects into the Megaverse if Law of HTTP produced the 429 constant.
+handled by adding a timing and retry interceptor to resend objects into the Megaverse if Law of HTTP produced the 429 constant.
 
 ### Watch it get built
 A simple colorful astor-console displays what is happening as objects gets sent into the Megaverse.
