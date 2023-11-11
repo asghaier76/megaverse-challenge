@@ -1,5 +1,7 @@
 import { crossMintApi } from './utils/crossMintApi';
 import { quadrantTransform } from './utils/indexTransformer';
+import { PolyanetIndex } from './models';
+
 
 enum Direction {
     'ROW' , 'COL'
@@ -10,26 +12,13 @@ export class Polyanet {
   constructor() {}
 
 
-  public async fillPolyanet(row: number, column: number, quadrantId: number = 0): Promise<void> {
-    let retries = 5; // Number of retries
-    let delay = 2000; // Initial delay in milliseconds
-    const transformedIndex = quadrantTransform(quadrantId, {row, column});
-    for (let i = 0; i < retries; i++) {
+  public async fillPolyanet(polyanetIdx: PolyanetIndex, quadrantId: number = 0): Promise<void> {
+    const transformedIndex = quadrantTransform(quadrantId, polyanetIdx);
       try {
-        await crossMintApi.post(this.urlSegment, { row: transformedIndex.row, column: transformedIndex.column })
-        // await axios.post(this.apiUrl, { row, column, candidateId });
-        break; // If the request is successful, exit the loop
+        await crossMintApi.post(this.urlSegment, transformedIndex)
       } catch (error: any) {
-        if (error.response && error.response.status === 429 && i < retries - 1) {
-          // Wait for the specified delay before retrying
-          await new Promise(resolve => setTimeout(resolve, delay));
-          delay *= 2; // Double the delay for the next retry
-        } else {
-          // If it's not a 429 error or we've exhausted retries, throw the error
-          throw error;
-        }
+        throw error;
       }
-    }
   }
 
   public async fillRowColSequence(quadrantId: number, direction: Direction): Promise<string[][]> {
