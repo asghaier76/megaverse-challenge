@@ -41,11 +41,24 @@ $ npm install
 
 ## Running the app
 
+To run phase 1 run 
 ```bash
-$ npm run start
+$ npm run start:phase1
+```
 
-# build
-$ npm run build
+To run phase 2 run 
+```bash
+$ npm run start:phase2
+```
+
+To wipe a single index and replace it with SPACE run
+```bash
+$ npm run start:wipe -- --action one --index row,col
+```
+
+To wipe entire Megaverse and replace it with all SPACEs
+```bash
+$ npm run start:wipe -- --action all
 ```
 
 To extract the indices for 🌙SOLOONs and ☄COMETHs run this command

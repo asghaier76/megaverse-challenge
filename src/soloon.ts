@@ -6,20 +6,20 @@ import { Logger } from './logger';
 
 export class Soloon {
   private urlSegment = 'soloons'
-  private megaverseMatrix: string[][] = [[]];
+  private megaverseMatrix: any = [[]];
 
   constructor() {}
 
   public async sprinkleUpSoloons(): Promise<void> {
     this.megaverseMatrix = await getCurrentMegaverse();
     for( let soloon of soloonPositions) {
-      // This part was not tested since I couldn't call the endpoint after first time filling the megaverse
-      // if(!this.isAdjacentToPolyanet(soloon.row, soloon.column)) {
-      //   throw new Error('Aha, not the planned for sprinkling outcome, Soloons can be only adjacent to POLYanets')
-      // }
+      // Check if the Soloon will be adjacent to an existing POLYanet otherwise revert
+      if(!this.isAdjacentToPolyanet(soloon.row, soloon.column)) {
+        throw new Error(`Aha, not the planned outcome for sprinkling 🌙's, Soloons can be only adjacent to POLYanets, invalid index at [${soloon.row}, ${soloon.column}]`);
+      }
       try {
         await crossMintApi.post(this.urlSegment, soloon);
-        Logger.info(`The Megaverse got prettier with one more 🌙 ${soloon.color} SOLOON at [${soloon.row}, ${soloon.column}]`)
+        Logger.info(`The Megaverse got prettier with one more ${soloon.color} SOLOON 🌙 at [${soloon.row}, ${soloon.column}]`)
       } catch (error: any) {
         throw error;
       }
@@ -37,7 +37,7 @@ export class Soloon {
         const adjCol = col + dCol;
 
         // Check boundaries and if the value is 'POLYanet' in adjacent cells
-        if (adjRow >= 0 && adjRow < rows && adjCol >= 0 && adjCol < cols && this.megaverseMatrix[adjRow][adjCol] === 'POLYanet') {
+        if (adjRow >= 0 && adjRow < rows && adjCol >= 0 && adjCol < cols && this.megaverseMatrix[adjRow][adjCol] && this.megaverseMatrix[adjRow][adjCol].type === 0) {
             return true;
         }
     }

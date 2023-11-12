@@ -14,7 +14,7 @@ export const getCurrentMegaverse = async() => {
   const urlSegment = 'map/5f98d93b-774b-4241-a4e1-d55074235b48';
   try {
     const res = await crossMintApi(urlSegment);
-    return res.data;
+    return res.data.map?.content ? res.data.map.content : [];
   } catch (error: any) {
     throw error;
   }

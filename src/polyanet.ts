@@ -16,7 +16,7 @@ export class Polyanet {
     const transformedIndex = quadrantTransform(quadrantId, polyanetIdx);
       try {
         await crossMintApi.post(this.urlSegment, transformedIndex);
-        Logger.info(`Building the Megaverse one 🪐POLYanet at an index [${transformedIndex.row}, ${transformedIndex.column}] `);
+        Logger.info(`Building the Megaverse one 🪐POLYanet at a coordinate [${transformedIndex.row}, ${transformedIndex.column}] `);
       } catch (error: any) {
         throw error;
       }
@@ -42,7 +42,6 @@ export class Polyanet {
                 }
                 await this.fillPolyanet({row, column}, quadrantId); 
                 matrix[row][column] = 'POLYANET';
-                console.log({row,column})
                 if(directionCounter === 3) {
                     directionCounter = 0;
                     direction = this.flipDirection(direction);

@@ -3,6 +3,7 @@ import { Polyanet } from './polyanet';
 import { Soloon } from './soloon';
 import { fillWithSpace, getCurrentMegaverse } from './utils/crossVerseUtils';
 import { Logger } from './logger';
+import { PolyanetIndex } from './models';
 
 export class MegaverseService {
   private polyanet: Polyanet;
@@ -54,6 +55,15 @@ export class MegaverseService {
     }
   }
 
+  public async wipeMegaverseSpot(index: PolyanetIndex) {
+    try {
+      Logger.debug(`wiping index: [${index.row}, ${index.column}]`);
+      await fillWithSpace(index);
+    } catch (error: any) {
+      Logger.error(`Even wiping a Megaverse space is not easy, some wiping didn't happen at,  [${index.row},${index.column}]: ${error.message}`);
+    }
+  }
+
   public async fillMegaverseShape() {
     for(let id = 0; id < 4; id++) { // process the four quadrants to cover the grid
       try {
@@ -67,7 +77,8 @@ export class MegaverseService {
   }
 
   // Phase 1 function to fill the grid with xShape
-  public async fillXShape(matrixSize: number, bufferZone: number): Promise<string[][]> {
+  public async fillXShape(matrixSize: number): Promise<string[][]> {
+    const bufferZone = 2;
     const matrix: string[][] = Array.from({ length: matrixSize }, () =>
       Array.from({ length: matrixSize }, () => 'SPACE')
     );
